@@ -1,0 +1,45 @@
+
+ROM used:   118/32768 (0%)
+            122/32768 (0%) including unused fragments
+
+            0.1 Average locations per line
+            7.9 Average locations per statement
+
+RAM used:   5/2048 (0%) at main() level
+            5/2048 (0%) worst case
+
+Stack used: 0 worst case (0 in main + 0 for interrupts)
+Stack size: 31
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+   66    15 100  Comunicación Serial.c
+  972     0   0  D:\Programas\PICC\Devices\18F45K50.h
+----- -----
+ 1038    15 Total
+
+Page ROM  %  RAM    Vol Diff  Functions:
+---- --- --- ---    --- ----  ----------
+0    114  48    1    290  3.5  main
+ Inline         0    319  4.1  @cinit1
+
+Program metrics:
+    Functions               2
+    Statements              15
+    Comments                196
+    Volume (V)              728
+    Difficulty (D)          7.6
+    Effort to implement (E) 5513
+    Time to implement (T)   5 minutes
+    Est Delivered Bugs (B)  0
+    Cyclomatic Complexity   5
+    Maintainability (MI)    125
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-01FFE     0  8192  
+02000-02006     4  4  
+02008-07FFE   114  24454  
+
+
+

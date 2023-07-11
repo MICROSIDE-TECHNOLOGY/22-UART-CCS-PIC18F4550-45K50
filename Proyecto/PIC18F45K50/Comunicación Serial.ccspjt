@@ -1,0 +1,23 @@
+[PROJECT]
+Target=Comunicación Serial.hex
+Processor_Text=PIC18F45K50
+CCSVersion=5.090
+Compiler=PCH
+[Target Data]
+FileList=Comunicación Serial.c
+[Comunicación Serial.c]
+Type=4
+[mru-list]
+1=Comunicación Serial.c
+[Units]
+Count=1
+1=Comunicación Serial (main)
+
+[defines]
+buildcount=1
+
+[ProjectLog]
+Days=1
+D1=02-12-2020
+D1_L=1
+D1_L1=[37558]Project Closed.

@@ -1,8 +1,10 @@
-/*
- AUTOR: MICROSIDE TECHNOLOGY S.A. DE C.V.
- FECHA: JUNIO 2019
-*/
-
+/************************************************************************************************
+Company:
+Microside Technology Inc.
+Product Revision  :  1
+Device            :  X-TRAINER
+Driver Version    :  1.0
+************************************************************************************************/
 /*
 ------------------------------------------------------------------------------
  Implementar comunicación serial para enviar un comando simple para prender y
@@ -18,7 +20,9 @@
 
 #use rs232(baud=9600, xmit=PIN_C6, rcv=PIN_C7,STREAM=UART ) //Configuración del puerto UART
 
-#define LED PIN_A1                                              //Pin donde está conectado el LED del X-TRAINER
+#define LED PIN_A4                                              //Pin donde está conectado el LED del X-TRAINER
+                                                                //en versiones anteriores se recomienda utilizar el pin A1
+
 #define Boton PIN_A2                                            //Pin donde está conectado el BOTON del X-TRAINER
 
 void main ()

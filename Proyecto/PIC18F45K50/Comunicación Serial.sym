@@ -12,12 +12,12 @@ F91     CCP_2_HIGH
 FBE     CCP_1
 FBE     CCP_1_LOW
 FBF     CCP_1_HIGH
-FE1-FE2 @READ_PACKED_MEMORY.P1
-FE1-FE2 @WRITE_PACKED_MEMORY.P2
-FE9-FEA @READ_PROGRAM_MEMORY.P1
-FE9-FEA @WRITE_PROGRAM_MEMORY.P2
-FE9-FEA @WRITE_PACKED_MEMORY.P3
-FE9-FEA @READ_PACKED_MEMORY.P4
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @WRITE_PROGRAM_MEMORY.P1
+FE9-FEA @WRITE_PACKED_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P3
+FE9-FEA @READ_PROGRAM_MEMORY.P4
 FF6-FF8 @READ_PROGRAM_MEMORY.P1
 FF6-FF8 @WRITE_PROGRAM_MEMORY.P2
 
@@ -27,18 +27,18 @@ ROM Allocation:
 002038  @cinit2
 
 Project Directory:
-    C:\Users\Martin Hdez\Desktop\18F45K50\Práctica 22 – Comunicación Serial\
+    C:\Users\victo\OneDrive\Documentos\X-TRAINER-hands-on\CCS\PIC18F\22-UART-CCS-PIC18F4550-45K50\Proyecto\PIC18F45K50\
 
 Project Files:
-    Comunicación Serial.c                                   [30-nov.-20 17:20  CRC=9F6ED3FB]
-    D:\Programas\PICC\Devices\18F45K50.h                    [02-oct.-19 09:47  CRC=5092E4C4]
+    Comunicación Serial.c                                   [30-ago.-23 17:31  CRC=0F8F7B13]
+    ..\..\..\..\..\..\..\..\..\..\Program Files (x86)\PICCDEMO\Devices\18F45K50.h [02-may.-23 08:34  CRC=7779E332]
 
-Source signature=40949D83
+Source signature=FE834177
 Program memory checksum=0000
-Hex file CRC=2A3A
+Hex file CRC=99DC
 
 Units:
-    C:\Users\Martin Hdez\Desktop\18F45K50\Práctica 22 – Comunicación Serial\Comunicación Serial (main)
+    C:\Users\victo\OneDrive\Documentos\X-TRAINER-hands-on\CCS\PIC18F\22-UART-CCS-PIC18F4550-45K50\Proyecto\PIC18F45K50\Comunicación Serial (main)
 
 Compiler Settings:
     Processor:      PIC18F45K50
@@ -47,7 +47,10 @@ Compiler Settings:
     Opt Level:      9
     Short,Int,Long: UNSIGNED: 1,8,16
     Float,Double:   32,32
-    Compile Mode:       CCS5
+    Compile Mode:   CCS5
+
+Compiler operating in Evaluation Mode
+To obtain a fully enabled compiler visit www.ccsinfo.com/products
 
 Output Files:
     XREF file:   Comunicación Serial.xsym

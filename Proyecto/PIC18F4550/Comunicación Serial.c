@@ -1,57 +1,48 @@
 /************************************************************************************************
 Company:
 Microside Technology Inc.
+File Name:
+ComunicaciÛn Serial.c
 Product Revision  :  1
 Device            :  X-TRAINER
 Driver Version    :  1.0
 ************************************************************************************************/
+
 /*
 ------------------------------------------------------------------------------
- Implementar comunicaci√≥n serial para enviar un comando simple para prender y
+ Implementar comunicaciÛn serial para enviar un comando simple para prender y
  apagar un LED incluido en la tarjeta X-TRAINER, y un segundo comando para
- preguntar el estado de un bot√≥n.
+ preguntar el estado de un botÛn.
 ------------------------------------------------------------------------------
 */
 
-#include <18F4550.h>                            //Incluye el microcontrolador con el que se va a trabajar 
-#use delay(clock=48Mhz, crystal)                //Tipo de oscilador y frecuencia dependiendo del microcontrolador 
-#build(reset=0x02000,interrupt=0x02008)         //Asignaci√≥n de los vectores de reset e interrupci√≥n
-#org 0x0000,0x1FFF {}                           //Reserva espacio en la memoria para la versi√≥n con bootloader
+#include <18F4550.h>                           // Incluye el microcontrolador con el que se va a trabajar 
+#use delay( clock=48Mhz, crystal )             // Tipo de oscilador y frecuencia dependiendo del microcontrolador 
+#build( reset=0x02000, interrupt=0x02008 )     // AsignaciÛn de los vectores de reset e interrupciÛn
+#org 0x0000,0x1FFF {}                          // Reserva espacio en la memoria para la versiÛn con bootloader
 
-#use rs232(baud=9600, xmit=PIN_C6, rcv=PIN_C7,STREAM=UART ) //Configuraci√≥n del puerto UART
+#use rs232( baud=9600, xmit=PIN_C6, rcv=PIN_C7,STREAM=UART ) // ConfiguraciÛn del puerto UART
 
-#define LED PIN_A4                                              //Pin donde est√° conectado el LED del X-TRAINER
-                                                                //en versiones anteriores se recomienda utilizar el pin A1
+#define LED PIN_A4                             // Pin donde est· conectado el LED del X-TRAINER
+                                               // en versiones anteriores se recomienda utilizar el pin A1
 
-#define Boton PIN_A2                                            //Pin donde est√° conectado el BOTON del X-TRAINER
+#define Boton PIN_A2                           // Pin donde est· conectado el BOTON del X-TRAINER
 
-void main ()
+void main( void ) {
 
-  {
-   while (1)
-  {
+    while ( 1 ) {
+      char Caracter = getc();                  // Guarda el caracter
 
-   char Caracter = getc ();                         //Guarda el caracter
-   if (Caracter == '0')
-    {
-      output_low (LED);                             //Apaga el LED
-    }
-    
-     else if (Caracter == '1')
-    {
-     output_HIGH (LED);                             //Enciende el LED
-    }
-    
-     else if (Caracter == '?')
-    {
-        if (1 == input (Boton))                     //Pregunta el estado del bot√≥n
-          {                                                                   
-            Printf ("0");                           //Env√≠a un 0 si el bot√≥n no est√° presionado
-          }
-          
-          else
-         {
-           Printf ("1");                            //Env√≠a un 1 si el bot√≥n est√° presionado
+      if ( Caracter == '0' ) {
+         output_low( LED );                    // Apaga el LED
+      } else if ( Caracter == '1' ) {
+         output_HIGH( LED );                   // Enciende el LED
+      } else if ( Caracter == '?' ) {
+
+         if ( 1 == input( Boton ) ) {          // Pregunta el estado del botÛn
+            Printf( "0" );                     // EnvÌa un 0 si el botÛn no est· presionado
+         } else {
+            Printf( "1" );                     // EnvÌa un 1 si el botÛn est· presionado
          }
       }
    }

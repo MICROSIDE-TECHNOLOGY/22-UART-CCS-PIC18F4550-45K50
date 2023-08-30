@@ -1,6 +1,8 @@
-CCS PCH C Compiler, Version 5.090, 13314               02-dic.-20 10:25
+CCS PCH C Compiler, Version 5.115d, 1               30-ago.-23 17:33
+Compiler operating in Evaluation Mode
+To obtain a fully enabled compiler visit www.ccsinfo.com/products
 
-               Filename:   C:\Users\Martin Hdez\Desktop\18F45K50\Práctica 22 – Comunicación Serial\Comunicación Serial.lst
+               Filename:   C:\Users\victo\OneDrive\Documentos\X-TRAINER-hands-on\CCS\PIC18F\22-UART-CCS-PIC18F4550-45K50\Proyecto\PIC18F45K50\Comunicación Serial.lst
 
                ROM used:   118 bytes (0%)
                            Largest free fragment is 24454
@@ -11,10 +13,15 @@ CCS PCH C Compiler, Version 5.090, 13314               02-dic.-20 10:25
 
 *
 2000:  GOTO   2008
-.................... /*
-....................  AUTOR: MICROSIDE TECHNOLOGY S.A. DE C.V.
-....................  FECHA: JUNIO 2019
-.................... */
+.................... /************************************************************************************************
+.................... Company:
+.................... Microside Technology Inc.
+.................... File Name:
+.................... Comunicación Serial.c
+.................... Product Revision  :  1
+.................... Device            :  X-TRAINER
+.................... Driver Version    :  1.0
+.................... ************************************************************************************************/
 .................... 
 .................... /*
 .................... ------------------------------------------------------------------------------
@@ -24,10 +31,10 @@ CCS PCH C Compiler, Version 5.090, 13314               02-dic.-20 10:25
 .................... ------------------------------------------------------------------------------
 .................... */
 .................... 
-.................... #include <18F45K50.h>                                 //Incluye el microcontrolador con el que se va a trabajar 
+.................... #include <18F45K50.h>                          // Incluye el microcontrolador con el que se va a trabajar 
 .................... //////////// Standard Header file for the PIC18F45K50 device ////////////////
 .................... ///////////////////////////////////////////////////////////////////////////
-.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          ////
+.................... ////        (C) Copyright 1996, 2020 Custom Computer Services          ////
 .................... //// This source code may only be used by licensed users of the CCS C  ////
 .................... //// compiler.  This source code may only be distributed to other      ////
 .................... //// licensed users of the CCS C compiler.  No other use, reproduction ////
@@ -39,16 +46,17 @@ CCS PCH C Compiler, Version 5.090, 13314               02-dic.-20 10:25
 .................... 
 .................... #list
 .................... 
-.................... #use delay(internal=48MHz)                            // Tipo de oscilador y frecuencia dependiendo del microcontrolador 
-.................... #build(reset=0x02000,interrupt=0x02008)               // Asigna los vectores de reset e interrupción para la versión con bootloader
-.................... #org 0x0000,0x1FFF {}                                 // Reserva espacio en memoria para el bootloader
+.................... #use delay(internal=48MHz)                     // Tipo de oscilador y frecuencia dependiendo del microcontrolador 
+.................... #build(reset=0x02000,interrupt=0x02008)        // Asigna los vectores de reset e interrupción para la versión con bootloader
+.................... #org 0x0000,0x1FFF {}                          // Reserva espacio en memoria para el bootloader
 .................... 
-.................... #use rs232(baud=9600, xmit=PIN_C6, rcv=PIN_C7,STREAM=UART ) //Configuración del puerto UART
+.................... #use rs232( baud=9600, xmit=PIN_C6, rcv=PIN_C7,STREAM=UART ) //Configuración del puerto UART
 .................... 
-.................... #define LED PIN_A1                                          //Pin donde está conectado el LED del X-TRAINER
-.................... #define Boton PIN_A2                                        //Pin donde está conectado el BOTON del X-TRAINER
+.................... #define LED PIN_A4                             //Pin donde está conectado el LED del X-TRAINER
+....................                                                //en versiones anteriores se recomienda utilizar el pin A1
+.................... #define Boton PIN_A2                           //Pin donde está conectado el BOTON del X-TRAINER
 .................... 
-.................... void main ()
+.................... void main( void ) {
 *
 2008:  CLRF   FF8
 200A:  BCF    FD0.7
@@ -75,76 +83,53 @@ CCS PCH C Compiler, Version 5.090, 13314               02-dic.-20 10:25
 2034:  CLRF   F99
 2036:  CLRF   F98
 .................... 
-....................   {
-.................... 
-....................    while (1)
-.................... 
-....................   {
-....................    char Caracter = getc ();                                 //Guarda el caracter
+....................     while ( 1 ) {
+....................       char Caracter = getc();                  // Guarda el caracter
 2038:  BTFSS  F9E.5
 203A:  BRA    2038
 203C:  MOVFF  FAE,05
-....................    
-....................    if (Caracter == '0')
+.................... 
+....................       if ( Caracter == '0' ) {
 2040:  MOVF   05,W
 2042:  SUBLW  30
 2044:  BNZ   204C
-.................... 
-....................     {
-....................       output_low (LED);                                     //Apaga el LED
-2046:  BCF    F92.1
-2048:  BCF    F89.1
-....................     }
+....................          output_low( LED );                    // Apaga el LED
+2046:  BCF    F92.4
+2048:  BCF    F89.4
+....................       } else if ( Caracter == '1' ) {
 204A:  BRA    2076
-.................... 
-....................      else if (Caracter == '1')
 204C:  MOVF   05,W
 204E:  SUBLW  31
 2050:  BNZ   2058
-.................... 
-....................     {
-....................      output_HIGH (LED);                                     //Enciende el LED
-2052:  BCF    F92.1
-2054:  BSF    F89.1
-....................     }
+....................          output_HIGH( LED );                   // Enciende el LED
+2052:  BCF    F92.4
+2054:  BSF    F89.4
+....................       } else if ( Caracter == '?' ) {
 2056:  BRA    2076
-.................... 
-....................      else if (Caracter == '?')
 2058:  MOVF   05,W
 205A:  SUBLW  3F
 205C:  BNZ   2076
 .................... 
-....................     {
-.................... 
-....................         if (1 == input (Boton))                             //Pregunta el estado del botón
+....................          if ( 1 == input( Boton ) ) {          // Pregunta el estado del botón
 205E:  BSF    F92.2
 2060:  BTFSS  F80.2
 2062:  BRA    206E
-.................... 
-....................           {                                                                   
-....................             Printf ("0");                                   //Envía un 0 si el botón no está presionado
+....................             Printf( "0" );                     // Envía un 0 si el botón no está presionado
 2064:  MOVLW  30
 2066:  BTFSS  F9E.4
 2068:  BRA    2066
 206A:  MOVWF  FAD
-....................           }
+....................          } else {
 206C:  BRA    2076
-.................... 
-....................           else
-.................... 
-....................          {
-....................            Printf ("1");                                     //Envía un 1 si el botón está presionado
+....................             Printf( "1" );                     // Envía un 1 si el botón está presionado
 206E:  MOVLW  31
 2070:  BTFSS  F9E.4
 2072:  BRA    2070
 2074:  MOVWF  FAD
 ....................          }
-.................... 
 ....................       }
 2076:  BRA    2038
-.................... 
 ....................    }
-.................... 
 .................... }
 2078:  SLEEP 
 

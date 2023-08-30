@@ -1,7 +1,7 @@
 [PROJECT]
 Target=Comunicación Serial.hex
 Processor_Text=PIC18F4550
-CCSVersion=5.090
+CCSVersion=5.115d
 Compiler=PCH
 [Target Data]
 FileList=Comunicación Serial.c
@@ -9,15 +9,27 @@ FileList=Comunicación Serial.c
 Type=4
 [mru-list]
 1=Comunicación Serial.c
-[Units]
-Count=1
-1=Comunicación Serial (main)
 
 [defines]
-buildcount=1
+buildcount=2
 
 [ProjectLog]
-Days=1
+Days=2
 D1=02-12-2020
 D1_L=1
 D1_L1=[37576]Project Closed.
+D2=30-08-2023
+D2_L=2
+D2_L1=[63093]Project Opened.
+D2_L2=[63214]Project Closed.
+
+[fileformats]
+forcecoff=0
+
+[Opened Files]
+1=Comunicación Serial.c
+t1=1
+Count=1
+[Units]
+Count=1
+1=Comunicación Serial (main)

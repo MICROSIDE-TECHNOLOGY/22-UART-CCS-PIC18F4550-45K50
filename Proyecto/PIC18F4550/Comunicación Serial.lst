@@ -1,6 +1,8 @@
-CCS PCH C Compiler, Version 5.090, 13314               02-dic.-20 10:26
+CCS PCH C Compiler, Version 5.115d, 1               30-ago.-23 17:31
+Compiler operating in Evaluation Mode
+To obtain a fully enabled compiler visit www.ccsinfo.com/products
 
-               Filename:   C:\Users\Martin Hdez\Desktop\18F4550\22 Comunicación Serial\Comunicación Serial.lst
+               Filename:   C:\Users\victo\OneDrive\Documentos\X-TRAINER-hands-on\CCS\PIC18F\22-UART-CCS-PIC18F4550-45K50\Proyecto\PIC18F4550\Comunicación Serial.lst
 
                ROM used:   104 bytes (0%)
                            Largest free fragment is 24468
@@ -11,10 +13,15 @@ CCS PCH C Compiler, Version 5.090, 13314               02-dic.-20 10:26
 
 *
 2000:  GOTO   2008
-.................... /*
-....................  AUTOR: MICROSIDE TECHNOLOGY S.A. DE C.V.
-....................  FECHA: JUNIO 2019
-.................... */
+.................... /************************************************************************************************
+.................... Company:
+.................... Microside Technology Inc.
+.................... File Name:
+.................... Comunicación Serial.c
+.................... Product Revision  :  1
+.................... Device            :  X-TRAINER
+.................... Driver Version    :  1.0
+.................... ************************************************************************************************/
 .................... 
 .................... /*
 .................... ------------------------------------------------------------------------------
@@ -24,10 +31,10 @@ CCS PCH C Compiler, Version 5.090, 13314               02-dic.-20 10:26
 .................... ------------------------------------------------------------------------------
 .................... */
 .................... 
-.................... #include <18F4550.h>                            //Incluye el microcontrolador con el que se va a trabajar 
+.................... #include <18F4550.h>                           // Incluye el microcontrolador con el que se va a trabajar 
 .................... //////////// Standard Header file for the PIC18F4550 device ////////////////
 .................... ///////////////////////////////////////////////////////////////////////////
-.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          ////
+.................... ////        (C) Copyright 1996, 2020 Custom Computer Services          ////
 .................... //// This source code may only be used by licensed users of the CCS C  ////
 .................... //// compiler.  This source code may only be distributed to other      ////
 .................... //// licensed users of the CCS C compiler.  No other use, reproduction ////
@@ -39,16 +46,18 @@ CCS PCH C Compiler, Version 5.090, 13314               02-dic.-20 10:26
 .................... 
 .................... #list
 .................... 
-.................... #use delay(clock=48Mhz, crystal)                //Tipo de oscilador y frecuencia dependiendo del microcontrolador 
-.................... #build(reset=0x02000,interrupt=0x02008)         //Asignación de los vectores de reset e interrupción
-.................... #org 0x0000,0x1FFF {}                           //Reserva espacio en la memoria para la versión con bootloader
+.................... #use delay( clock=48Mhz, crystal )             // Tipo de oscilador y frecuencia dependiendo del microcontrolador 
+.................... #build( reset=0x02000, interrupt=0x02008 )     // Asignación de los vectores de reset e interrupción
+.................... #org 0x0000,0x1FFF {}                          // Reserva espacio en la memoria para la versión con bootloader
 .................... 
-.................... #use rs232(baud=9600, xmit=PIN_C6, rcv=PIN_C7,STREAM=UART ) //Configuración del puerto UART
+.................... #use rs232( baud=9600, xmit=PIN_C6, rcv=PIN_C7,STREAM=UART ) // Configuración del puerto UART
 .................... 
-.................... #define LED PIN_A1                                              //Pin donde está conectado el LED del X-TRAINER
-.................... #define Boton PIN_A2                                            //Pin donde está conectado el BOTON del X-TRAINER
+.................... #define LED PIN_A4                             // Pin donde está conectado el LED del X-TRAINER
+....................                                                // en versiones anteriores se recomienda utilizar el pin A1
 .................... 
-.................... void main ()
+.................... #define Boton PIN_A2                           // Pin donde está conectado el BOTON del X-TRAINER
+.................... 
+.................... void main( void ) {
 *
 2008:  CLRF   FF8
 200A:  BCF    FD0.7
@@ -68,57 +77,45 @@ CCS PCH C Compiler, Version 5.090, 13314               02-dic.-20 10:26
 2026:  MOVLW  07
 2028:  MOVWF  FB4
 .................... 
-....................   {
-....................    while (1)
-....................   {
-.................... 
-....................    char Caracter = getc ();                         //Guarda el caracter
+....................     while ( 1 ) {
+....................       char Caracter = getc();                  // Guarda el caracter
 202A:  BTFSS  F9E.5
 202C:  BRA    202A
 202E:  MOVFF  FAE,05
-....................    if (Caracter == '0')
+.................... 
+....................       if ( Caracter == '0' ) {
 2032:  MOVF   05,W
 2034:  SUBLW  30
 2036:  BNZ   203E
-....................     {
-....................       output_low (LED);                             //Apaga el LED
-2038:  BCF    F92.1
-203A:  BCF    F89.1
-....................     }
+....................          output_low( LED );                    // Apaga el LED
+2038:  BCF    F92.4
+203A:  BCF    F89.4
+....................       } else if ( Caracter == '1' ) {
 203C:  BRA    2068
-....................     
-....................      else if (Caracter == '1')
 203E:  MOVF   05,W
 2040:  SUBLW  31
 2042:  BNZ   204A
-....................     {
-....................      output_HIGH (LED);                             //Enciende el LED
-2044:  BCF    F92.1
-2046:  BSF    F89.1
-....................     }
+....................          output_HIGH( LED );                   // Enciende el LED
+2044:  BCF    F92.4
+2046:  BSF    F89.4
+....................       } else if ( Caracter == '?' ) {
 2048:  BRA    2068
-....................     
-....................      else if (Caracter == '?')
 204A:  MOVF   05,W
 204C:  SUBLW  3F
 204E:  BNZ   2068
-....................     {
-....................         if (1 == input (Boton))                     //Pregunta el estado del botón
+.................... 
+....................          if ( 1 == input( Boton ) ) {          // Pregunta el estado del botón
 2050:  BSF    F92.2
 2052:  BTFSS  F80.2
 2054:  BRA    2060
-....................           {                                                                   
-....................             Printf ("0");                           //Envía un 0 si el botón no está presionado
+....................             Printf( "0" );                     // Envía un 0 si el botón no está presionado
 2056:  MOVLW  30
 2058:  BTFSS  F9E.4
 205A:  BRA    2058
 205C:  MOVWF  FAD
-....................           }
+....................          } else {
 205E:  BRA    2068
-....................           
-....................           else
-....................          {
-....................            Printf ("1");                            //Envía un 1 si el botón está presionado
+....................             Printf( "1" );                     // Envía un 1 si el botón está presionado
 2060:  MOVLW  31
 2062:  BTFSS  F9E.4
 2064:  BRA    2062
@@ -132,7 +129,7 @@ CCS PCH C Compiler, Version 5.090, 13314               02-dic.-20 10:26
 
 Configuration Fuses:
    Word  1: CC07   PLL12 CPUDIV1 NOUSBDIV HS FCMEN IESO
-   Word  2: 1E26   PUT BROWNOUT VREGEN NOWDT WDT32768
+   Word  2: 1E3E   PUT BROWNOUT BORV21 VREGEN NOWDT WDT32768
    Word  3: 8700   CCP2C1 PBADEN LPT1OSC MCLR
    Word  4: 00A1   STVREN NOLVP ICSP2 NOXINST NODEBUG
    Word  5: C00F   NOPROTECT NOCPB NOCPD
